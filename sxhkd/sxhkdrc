@@ -1,0 +1,116 @@
+#             _     _       _
+#    _____  _| |__ | | ____| |
+#   / __\ \/ / '_ \| |/ / _` |
+#   \__ \>  <| | | |   < (_| |
+#   |___/_/\_\_| |_|_|\_\__,_|
+#
+
+# Applications {{{1
+# Launch terminal emulator
+super + Return
+	$TERM_EMULATOR
+
+# Launch terminal emulator in the same directory as focused terminal
+super + shift + Return
+	"$DOTS/scripts/working-term"
+
+super + semicolon
+	alacritty --title '#FLAG:float#Alacritty'
+
+# Application menu
+super + space
+	rofi -show DRun
+# }}}
+
+# Desktop {{{1
+# Shorthand for focusing desktop / moving nodes to other desktops
+super + {_,shift +} {1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,0}.local'
+
+# Go to another named desktop
+super + d; super + g
+	"$DOTS/bspwm/scripts/desktop/goto"
+
+# Rename the focused desktop
+super + d; super + r
+	"$DOTS/bspwm/scripts/desktop/rename"
+
+# Clear unused desktops
+super + d; super + c
+	"$DOTS/bspwm/scripts/desktop/clear"
+
+super + d; super + h
+	bspc desktop -b prev; bspc desktop -f prev
+super + d; super + l
+	bspc desktop -b next; bspc desktop -f next
+
+super + Tab
+	bspc monitor -f next
+
+super + BackSpace
+	bspc desktop -f last
+
+#  }}}
+
+# Web {{{
+super + w; super + w
+	$WEB_BROWSER
+# }}}
+
+# Node {{{
+# Change focus / move focused window / resize presel.
+super + {_,shift +} {h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# Close window.
+super + q
+	bspc node -c
+
+super + n; super + m
+	"$DOTS/bspwm/scripts/node/move"
+
+super + n; super + f
+	"$DOTS/bspwm/scripts/node/follow"
+
+super + n; super + u
+	bspc node -t ~fullscreen
+
+super + n; super + p; super + {h,j,k,l}
+	bspc node {-p west,-p south,-p north,-p east} --presel-ratio $(<$MY_RUN/bspwm-presel)
+
+super + {comma,period}
+	"$DOTS/bspwm/scripts/node/presel" {--increase,--decrease}
+# }}}
+
+# System {{{
+super + p; super + q
+	bspc quit
+
+super + p; super + c
+	pkill -SIGUSR1 compton && dunstify -a "compton" "Reloaded configuration."
+
+super + p; super + b
+	"$DOTS/bspwm/bspwmrc" && dunstify -a "bspwm" "Reloaded configuration."
+
+super + p; super + s
+	pkill -SIGUSR1 sxhkd && dunstify -a "sxhkd" "Reloaded configuration."
+
+super + p; super + d
+	pkill dunst && dunst & dunstify -a "dunst" "Reloaded configuration."
+
+super + p; super + l
+	i3lock -f
+
+super + o; super + {j,k}
+	/usr/local/bin/brightness/samus-screen-backlight --{decrease,increase}
+
+super + o; super + {J,K}
+	/usr/local/bin/brightness/samus-keyboard-backlight --{decrease,increase}
+#  }}}
+
+# Status {{{
+super + s
+	pgrep -f "$DOTS/bspwm/ui/system-status" &>/dev/null && pkill -f "$DOTS/bspwm/ui/system-status" || "$DOTS/bspwm/ui/system-status"
+# }}}
+
+# vim: fdm=marker :

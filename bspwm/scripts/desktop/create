@@ -1,0 +1,18 @@
+#!/usr/bin/env ion
+# desktop::create: Create a new desktop in the active deskset
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+let desktop = @args[1]
+let deskset = $(head -1 ${MY_RUN}/bspwm/desksets)
+
+# Verify arguments
+if test -z $desktop
+    echo "desktop::create: Missing argument 'desktop'."
+else if test -z $(bspc query -D --names | grep -w $desktop)
+    echo "desktop::create: Creating desktop '${desktop}'."
+    bspc monitor --add-desktops "${desktop}"
+else
+    echo "desktop::create: Desktop '${desktop}' already exists."
+end

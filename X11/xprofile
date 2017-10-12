@@ -1,0 +1,14 @@
+#                          __ _ _
+#   __  ___ __  _ __ ___  / _(_) | ___
+#   \ \/ / '_ \| '__/ _ \| |_| | |/ _ \
+#    >  <| |_) | | | (_) |  _| | |  __/
+#   /_/\_\ .__/|_|  \___/|_| |_|_|\___|
+#        |_|
+#
+# Assuming you start your X server with `startx', it is up to you to source
+# this file from your `.xinitrc'.
+
+export TERM_EMULATOR="alacritty"
+export TERM_EMULATOR_CHDIR_ARG="--working-directory"
+
+# vim: ft=sh :

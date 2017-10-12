@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/zach/.config/kitty'
+let g:netrw_dirhist_2='/home/zach/.mutt'
+let g:netrw_dirhist_3='/home/zach/drv/work/school/arch/hwk/proj1/.git'
+let g:netrw_dirhist_4='/home/zach/mar/nvim/halone'

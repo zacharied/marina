@@ -1,0 +1,45 @@
+#!/usr/bin/env ion
+let INCREMENT = '0.1'
+let PRESEL = "${MY_RUN}/bspwm/preselect-ratio"
+
+if not test -f $PRESEL
+    echo "node::presel: Preselect tempfile not found. Creating it."
+    echo '0.5' > $PRESEL
+end
+
+let ratio = $(cat $PRESEL)
+echo "node::presel: Current ratio is $ratio."
+
+let arg = @args[1]
+
+if test $arg = '--increase'
+    echo "increase"
+    let ratio += $INCREMENT
+else if test $arg = '--decrease'
+    echo "decrease"
+    let ratio -= $INCREMENT
+else if test @args[1] = '--reset'
+    let ratio = '0.5'
+else
+    echo "node::presel: Invalid or no flag given."
+end
+
+if test $(bc <<< "${ratio} >= 1") -eq 1
+    echo "node::presel: Ratio too high, bounding."
+    let ratio = $(calc "1 - ${INCREMENT}")
+else if test $(bc <<< "${ratio} <= 0") -eq 1
+    echo "node::presel: Ratio too low, bounding."
+    let ratio = $INCREMENT
+end
+
+let ratio = $ratio[..3]
+
+if test -n $ratio
+    echo $ratio > $PRESEL
+    bspc node --presel-ratio $ratio
+else
+    echo "node::presel: Invalid ratio value '$ratio'."
+    echo '0.5' > $PRESEL
+end
+
+echo "node::presel: New ratio: ${ratio}."

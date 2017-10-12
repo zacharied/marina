@@ -1,0 +1,10 @@
+#!/usr/bin/env ion
+# desktop::clear: Remove empty desktops from the current desktop
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+for d in @(bspc query -D --desktop '.!occupied')
+    echo "desktop::clear: Removing desktop '$d'."
+    bspc desktop $d --remove
+end

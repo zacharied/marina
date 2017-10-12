@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+readonly FIFO="$MY_RUN/presel"
+
+[[ -p "$FIFO" ]] || mkfifo "$FIFO"
+
+while read line; do
+    if [[ line =~ '^.*dir.*$' ]]; then
+        echo 'p' >> "$FIFO"
+    elif [[ line =~ '^.*cancel.*$' ]]; then
+        echo 'c' >> "$FIFO"
+    fi
+done < <(bspc subscribe node_presel)

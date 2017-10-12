@@ -1,0 +1,119 @@
+#            _
+#    _______| |__  _ __ ___
+#   |_  / __| '_ \| '__/ __|
+#    / /\__ \ | | | | | (__
+#   /___|___/_| |_|_|  \___|
+#
+
+# {{{1 Initialization
+
+source "${DOTS}/shell/alias.sh"
+
+# Add custom completions.
+fpath+=( "${DOTS}/zsh/completions" )
+
+# {{{1 History
+
+# Set lines saved and location.
+export HISTSIZE=10000
+export SAVEHIST=$HISTSIZE
+export HISTFILE="$DOTS/zsh/.zsh/runtime/history"
+
+# Share history file among all sessions.
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
+# {{{1 Completion
+
+# Enable completion.
+autoload -Uz compinit && compinit
+
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Allow lots of unique globbing tricks.
+setopt EXTENDED_GLOB
+
+# {{{1 Plugins
+if [[ -d "$HOME/.zplug" ]]; then
+    source "$HOME/.zplug/init.zsh"
+
+    zplug 'zsh-users/zsh-syntax-highlighting'
+    zplug 'zsh-users/zsh-completions'
+    zplug 'zsh-users/zsh-history-substring-search'
+
+    zplug 'b4b4r07/enhancd'
+    zplug 'peterhurford/up.zsh'
+
+    zplug load
+else
+    printf 'zplug is not installed on this machine.\n'
+fi
+
+# {{{1 Keybinds
+
+# Avoid waiting for keypress sequences.
+export KEYTIMEOUT=0
+
+# Vi mode.
+bindkey -v
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M vicmd 'K' history-substring-search-up
+bindkey -M vicmd 'J' history-substring-search-down
+
+bindkey -M viins '^N' menu-complete
+bindkey -M viins '^P' reverse-menu-complete
+
+autoload -Uz edit-command-line && zle -N edit-command-line
+bindkey -M vicmd '^E' edit-command-line
+
+# {{{1 Prompt
+
+setopt PROMPT_SUBST
+
+# Used to store the return value of the last command.
+declare -i _last_status
+
+# Configure vi mode indicator.
+if [[ "$TERM" == 'linux' ]]; then
+    VI_INDICATOR_NORMAL='N'
+    VI_INDICATOR_INSERT='I'
+    STARTER_ICON='->'
+else
+    VI_INDICATOR_NORMAL='♭'
+    VI_INDICATOR_INSERT='♯'
+    STARTER_ICON='♩'
+fi
+
+readonly VI_INDICATOR_NORMAL
+readonly VI_INDICATOR_INSERT
+readonly STARTER_ICON
+
+precmd() {
+    _last_status=$?
+}
+
+function zle-line-init zle-keymap-select {
+    [[ "${KEYMAP}" =~ (main|viins) ]]             \
+        && _prompt_starter="$VI_INDICATOR_INSERT" \
+        || _prompt_starter="$VI_INDICATOR_NORMAL"
+
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# Initialize the prompt.
+if [[ "$TERM" == 'linux' ]]; then
+    PROMPT='%B${PWD}%b '
+else
+    PROMPT=' %F{6}${PWD} $_prompt_starter $STARTER_ICON%f '
+fi
+
+# }}}1
+
+# vim: fdm=marker :

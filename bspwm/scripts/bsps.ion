@@ -1,0 +1,4 @@
+#!/usr/bin/env ion
+# bsps: Interact with `bspc` via shell scripts
+
+export ROOT = ${DOTS}/bspwm/scripts

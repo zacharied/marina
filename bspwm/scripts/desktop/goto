@@ -1,0 +1,20 @@
+#!/usr/bin/env ion
+# desktop::goto: Focus a desktop by name
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+if test -z @args[1]
+    let desktop = $(bspc query -D --names | dmenu -p 'desktop::goto')
+else
+    let desktop = @args[1]
+end
+
+if test -n $desktop
+    desktop/create $desktop
+
+    echo "desktop::goto: Focusing desktop '$desktop'."
+    bspc desktop --focus $desktop
+else
+    echo "desktop::goto: No desktop specified for 'goto'."
+end

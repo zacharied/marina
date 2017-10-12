@@ -1,0 +1,9 @@
+default partial modifier_keys
+xkb_symbols "basic" {
+    name[Group1] = "Happy Hacking Keyboard";
+
+    include "us(basic)"
+    include "level5(rctrl_switch)"
+    include "compose(ralt)"
+    include "ctrl(swap_lwin_lctl)"
+};

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+fs=$(mount | grep "fuse.sshfs")
+
+typeset output
+
+while read -r line; do
+    server=$(sed 's/ on .*$//g' <<< "$line")
+    mountpoint=$(sed -e 's/^.* on //g' -e 's/ type .*$//g' <<< "$line")
+    if [[ -n "$server" && -n "$mountpoint" ]]; then
+        output+="$server\n\t$mountpoint\n"
+    fi
+done <<< "$fs"
+
+if [[ -z "$output" ]]; then
+    output="No remotes"
+fi
+
+echo -ne "$output"

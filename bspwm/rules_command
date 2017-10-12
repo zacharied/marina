@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+declare output
+
+echo "$@" >> "${MY_RUN}/bspwm/rules_command_args"
+
+# Handle flags.
+case "$2" in
+    '#FLAG:float#'*)
+        output+="state=floating "
+        ;;
+    *)
+        output+="state=tiled "
+        ;;
+esac
+
+# Handle application-specific rules.
+case "$2" in
+    'Steam')
+        output+="desktop=steam "
+        ;;
+esac
+
+declare -r output
+
+# Log our output.
+printf '%s:\n\t%s' "$@" "$output" > "$MY_RUN/bspwm/rules_command_output"
+
+# Return the output to bspwm.
+printf '%s' "$output"

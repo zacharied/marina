@@ -1,0 +1,14 @@
+#!/usr/bin/env ion
+# node::follow: Move the focused node to a desktop and focus that desktop
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+let desktop = "$(active_deskset)#$(bspc query -D --names | dmenu -p 'node::follow')"
+
+if test -n $desktop
+    node/move $desktop
+    desktop/goto $desktop
+else
+    echo "node::follow: No desktop given."
+end

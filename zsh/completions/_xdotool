@@ -1,0 +1,7 @@
+#compdef xdotool
+
+_xdotool() {
+    _arguments '1:actions:($(xdotool 2>/dev/null | tail -n +2))'
+}
+
+_xdotool "$@"

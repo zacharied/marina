@@ -1,0 +1,85 @@
+env:
+  TERM: xterm-256color
+
+dimensions:
+  columns: 80
+  lines: 30
+
+dpi:
+  x: 240
+  y: 239
+
+tabspaces: 4
+
+draw_bold_text_with_bright_colors: false
+
+font:
+  normal:
+    family: PragmataPro Nerd Font
+  bold:
+    family: PragmataPro
+    style: Bold
+  italic:
+    family: PragmataPro
+    style: Italic
+  size: 10.0
+  offset:
+    x: -51.89
+    y: 2.0
+
+  use_thin_strokes: true
+
+padding:
+    x: 0
+    y: 0
+
+render_timer: false
+
+custom_cursor_colors: false
+
+# Colorscheme (Seagull)
+colors:
+  primary:
+    background: '0xffffff'
+    foreground: '0x6d767d'
+  normal:
+    black:	    '0x1D252B'
+    red:	    '0xFF4053'
+    green:	    '0x11AB00'
+    yellow:	    '0xBF8C00'
+    blue:	    '0x0099FF'
+    magenta:	'0xFF549B'
+    cyan:	    '0x00A5AB'
+    white:	    '0xE6EAED'
+  bright:
+    black:	    '0x0B141A'
+    red:	    '0xFF6200'
+    green:	    '0x61707A'
+    yellow:	    '0x6D767D'
+    blue:	    '0x787E82'
+    magenta:	'0x9854FF'
+    cyan:	    '0x808487'
+    white:	    '0xFFFFFF'
+
+visual_bell:
+  animation: EaseOutExpo
+  duration: 0
+
+key_bindings:
+  # Xorg copy-paste.
+  - { key: P,        mods: Control|Shift,    action: Paste }
+  - { key: Y,        mods: Control|Shift,    action: Copy }
+  # Arrow keys.
+  - { key: Left,                    chars: "\x1b[D",   mode: ~AppCursor  }
+  - { key: Left,                    chars: "\x1bOD",   mode: AppCursor   }
+  - { key: Right,                   chars: "\x1b[C",   mode: ~AppCursor  }
+  - { key: Right,                   chars: "\x1bOC",   mode: AppCursor   }
+  - { key: Up,                      chars: "\x1b[A",   mode: ~AppCursor  }
+  - { key: Up,                      chars: "\x1bOA",   mode: AppCursor   }
+  - { key: Down,                    chars: "\x1b[B",   mode: ~AppCursor  }
+  - { key: Down,                    chars: "\x1bOB",   mode: AppCursor   }
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+
+hide_cursor_when_typing: false

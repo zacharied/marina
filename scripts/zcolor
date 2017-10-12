@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+for c in {0..15}; do
+    print -Pn "%F{0}%K{$c} $c %F{7} $c %f%k"
+done

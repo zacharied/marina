@@ -1,0 +1,18 @@
+#!/usr/bin/env ion
+# Move the focused node to a desktop
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+if test -z @args[1]
+    let desktop = $(bspc query -D --names | dmenu -p 'node::move')
+else
+    let desktop = @args[1]
+end
+
+if test -n $desktop
+    desktop/create $desktop
+
+    echo "node::move: Moving node to desktop '$desktop'."
+    bspc node --to-desktop $desktop
+end

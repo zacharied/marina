@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+#
+# generate.py: takes input from bspc events and processes them to be shown by lemonbar
+
+# Preamble {{{1
+import os, sys
+import subprocess as sp
+import re
+import psutil
+import collections as col
+from enum import Enum, auto
+
+from bspwm_python import desktop, monitor, node
+from bspwm_lemonbar import text
+
+# Initialize the global sections
+section_deskset  = ''
+section_desktops = ''
+section_title    = ''
+
+# Generators {{{1
+def gen_window_name():
+    # Get ID of active window
+    wid = sp.run(['xdo', 'id'], stdout=sp.PIPE).stdout.decode('utf-8')
+
+    # Leave the title blank if there is no focused window
+    if not wid:
+        return
+
+    # Strip leading 0 from hex address given by `xdo id'
+    wid = wid[:2] + wid[3:]
+
+    node_prop = sp.run(['xprop', '-id', wid, 'WM_NAME', 'WM_CLASS', '_NET_WM_PID'], stdout=sp.PIPE).stdout.decode('utf-8').split('\n')
+
+    # Output of WM_NAME is 'WM_NAME(<encoding>) = "<name>"'
+    try:
+        node_name = node_prop[0].split('"')[1]
+        print("Node name: '{}'".format(node_name), file=sys.stderr)
+
+        # Output of WM_CLASS is 'WM_CLASS(<encoding>) = "<class1>", "<class2>"'
+        # We get the first class
+        node_class = node_prop[1].split('"')[1]
+        print("Node class: '{}'".format(node_class), file=sys.stderr)
+    except IndexError:
+        print("IndexError encountered! `xprop` output:", file=sys.stderr)
+        print(node_prop, file=sys.stderr)
+
+    # Only some applications support the _NET_WM_PID attribute
+    if node_prop[2] != '_NET_WM_PID:  not found.':
+        node_pid = node_prop[2].split('=')[1]
+        print("Node PID: {}".format(node_pid), file=sys.stderr)
+    else:
+        print("No node PID found.", file=sys.stderr)
+        node_pid = None
+
+    output = ''
+
+    # Handle user-defined class title overrides
+    if class_rules and node_class in class_rules:
+        print("Using class title override '{}'".format(class_rules[node_class]), file=sys.stderr)
+        output += class_rules[node_class]
+    else:
+        output += node_name
+
+    if node_pid:
+        try:
+            if psutil.pid_exists(int(node_pid)):
+                proc = psutil.Process(int(node_pid))
+                temp_parent = proc
+
+                # Get child window rules
+                while temp_parent.pid != 1:
+                    temp_parent = temp_parent.parent()
+                    if temp_parent.name() in pname_rules:
+                        output = pname_rules[temp_parent.name()] + ' > ' + output
+
+                # Get child terminal application rules
+                for c in proc.children(recursive=True):
+                    if pname_rules and c.name() in pname_rules:
+                        output += ' ' + pname_rules[c.name()]
+        except:
+            print("Process {} was closed while trying to read it. There's not much we can do about this.".format(node_pid), file=sys.stderr)
+            pass
+
+    return output
+
+def gen_desktops(report):
+    desktops = [ ]
+    for i, item in enumerate(report.split(':')):
+        if item[0] == 'W' or item[0] == 'w':
+            # TODO: Handle this
+            continue
+        elif item[0] == 'L' or item[0] == 'T' or item[0] == 'G':
+            # TODO: Handle this
+            continue
+
+        if item[0] == 'O' or item[0] == 'F' or item[0] == 'U':
+            state = desktop.State.FOCUSED
+        elif item[0] == 'o' or item[0] == 'f' or item[0] == 'U':
+            state = desktop.State.UNFOCUSED
+
+        if item[0] == 'O' or item[0] == 'o':
+            status = desktop.Status.OCCUPIED
+        elif item[0] == 'U' or item[0] == 'u':
+            status = desktop.Status.URGENT
+        elif item[0] == 'F' or item[0] == 'f':
+            status = desktop.Status.UNOCCUPIED
+
+        desktops.append(desktop.Desktop(item[1:], state, status))
+
+    return desktops
+
+def gen_active_deskset():
+    with open("{}/bspwm/desksets".format(os.environ['MY_RUN']), 'r') as f:
+        return f.readline().strip()
+
+# Parsing {{{1
+def node(event):
+    global section_title
+
+    section_title = gen_window_name()
+    if not section_title:
+        print("Section title is None.", file=sys.stderr)
+        section_title = ''
+
+def report(report):
+    global section_desktops
+    global section_title
+    global section_deskset
+
+    # Set initial padding of desktops
+    section_desktops = text.offset(10)
+    for i, d in enumerate(gen_desktops(report)):
+        inner = '
+        inner = '{o}{i}{s}{n}{o}'.format(o=text.offset(10), i=text.style(text.Style.ITALIC, str(i + 1)), s=text.offset(7), n=d.name)
+        if d.state == desktop.State.FOCUSED:
+            inner = text.decorate(text.Decoration.UNDERLINE, inner)
+
+        if d.status == desktop.Status.UNOCCUPIED:
+            inner = text.color(text.Layer.FOREGROUND, '#AAEBDBB2', inner)
+
+        section_desktops += '{o}{i}{o}'.format(o=text.offset(5), i=inner)
+
+    section_deskset = '{o}{t}{o}'.format(o=text.offset(5), t=text.style(text.Style.BOLD, gen_active_deskset()))
+
+# Initialization {{{1
+# Handle special title rules
+Rule = col.namedtuple('Rule', ['value', 'size'])
+
+def load_rules(f):
+    rules = { }
+    try:
+        with open(f) as rule_file:
+            for line in rule_file:
+                # Skip commented lines
+                if line[0] == '#':
+                    continue
+
+                kv = line.split(':')
+                rules[kv[0]] = text.style(text.Style.ICON, kv[1].strip())
+
+            return rules
+    except FileNotFoundError:
+        print("Title rules file '{}' not found.".format(f), file=sys.stderr)
+        return None
+
+class_rules = load_rules('class_rules')
+pname_rules = load_rules('pname_rules')
+
+# Main {{{1
+# Begin parsing input
+with os.popen('bspc subscribe report node') as p:
+    # Track each event so we don't print more than necessary
+    for line in p:
+        if line[0] == 'W':
+            report(line)
+            node(line)
+
+        print(text.align(text.Alignment.LEFT, '{s}{o}{t}'.format(s=section_deskset, o=text.offset(5), t=section_desktops)) + text.align(text.Alignment.RIGHT, section_title))
+        sys.stdout.flush()
+# }}}1
+
+# vim: fdm=marker

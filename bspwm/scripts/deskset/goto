@@ -1,0 +1,20 @@
+#!/usr/bin/env ion
+# deskset::goto: Activate a deskset
+
+let line = $(cat ${MY_RUN}/bspwm/desksets | dmenu -p "deskset::goto")
+
+if test -n $line
+    if grep $line ${MY_RUN}/bspwm/desksets
+        # Remove current deskset from the body of the file
+        sed -i "/${line}/d" ${MY_RUN}/bspwm/desksets
+
+        echo "deskset::goto: Moving to existing deskset '${line}'."
+    else
+        echo "deskset::goto: Creating new deskset '${line}'."
+    end
+
+    # Put the selected deskset at the top of the file
+    sed -i "1s/^/${line}\n/" $MY_RUN/bspwm/desksets
+else
+    echo "deskset::goto: No input given."
+end

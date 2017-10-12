@@ -1,0 +1,14 @@
+#!/usr/bin/env ion
+# Rename the currently focused desktop.
+
+source ${DOTS}/bspwm/scripts/bsps.ion
+cd $ROOT
+
+let name = $(echo | dmenu -p 'desktop::rename')
+
+if test -n $name
+    echo "desktop::rename: Renaming focused desktop to '$name'."
+    bspc desktop --rename $name
+else
+    echo "desktop::rename: No name given."
+end

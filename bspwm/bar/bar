@@ -1,0 +1,18 @@
+readonly DIR="$(dirname "$(readlink -f "$0")")"
+
+readonly FONT_SIZE='13'
+readonly MAIN_FONT='Sans'
+
+"${DIR}/generate" | lemonbar                           \
+    -f "${MAIN_FONT}:size=${FONT_SIZE}"                \
+    -f "${MAIN_FONT}:size=${FONT_SIZE}:style=bold"     \
+    -f "Nimbus Roman:size=15:style=italic"             \
+    -f "Monospace:size=${FONT_SIZE}"                   \
+    -f "3270Medium Nerd Font:size=$((${FONT_SIZE}+1))" \
+    -u '2'                                             \
+    -B '#00000000'                                     \
+    -F '#EBDBB2'                                       \
+    -U '#EBDBB2'                                       \
+    -o '0'
+
+# vim: ft=sh

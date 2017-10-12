@@ -1,0 +1,5 @@
+#compdef dots
+
+_path_files -/ -W $DOTS
+
+# vim: ft=zsh :
