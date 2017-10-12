@@ -72,6 +72,7 @@ bindkey -M vicmd '^E' edit-command-line
 
 # {{{1 Prompt
 
+# Allow us to use percent-sign substitutions.
 setopt PROMPT_SUBST
 
 # Used to store the return value of the last command.
@@ -94,6 +95,9 @@ readonly STARTER_ICON
 
 precmd() {
     _last_status=$?
+
+    # TODO: Avoid hard-coding colors?
+    RPS1='%K{6}%F{15}%f '$_last_status' %k'
 }
 
 function zle-line-init zle-keymap-select {
