@@ -10,17 +10,19 @@ printf 'Window class:\t%s\n' "$WINDOW_CLASS"
 
 if [[ "$WINDOW_CLASS" == 'Alacritty' ]]; then
     # Acquire the PID of the shell.
-    declare -ir pid="$(xprop -id $(xd getactivewindow) | grep '_NET_WM_PID' | sed 's/^.*=//')"
+    declare -ir PID=$(xprop -id $(xd getactivewindow) | grep '_NET_WM_PID' | sed 's/^.*=//')
+
+    declare -ir CHILD_PID=$(pgrep -P $PID)
 
     # Find its current directory.
-    declare -r cwd="$(readlink "/proc/$pid/cwd")"
+    declare -r CWD=$(readlink "/proc/$CHILD_PID/cwd")
 
     # Run.
-    printf 'Running in directory %s.\n' "$cwd"
-    alacritty --working-directory "$cwd"
+    printf 'Running in directory %s.\n' "$CWD"
+    alacritty --working-directory "$CWD"
 elif [[ "$WINDOW_CLASS" == 'qutebrowser' ]]; then
     # Easy access to downloads folder
     alacritty --working-directory "$MY_TEMP"
 else
-    alacritty
+    exit 1
 fi
