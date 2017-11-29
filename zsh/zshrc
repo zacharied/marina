@@ -97,7 +97,7 @@ precmd() {
     _last_status=$?
 
     # TODO: Avoid hard-coding colors?
-    RPS1='%K{6}%F{15}%f '$_last_status' %k'
+    RPS1='%K{6}%F{232} '$_last_status' %k'
 }
 
 function zle-line-init zle-keymap-select {

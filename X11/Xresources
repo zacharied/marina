@@ -6,36 +6,35 @@
 !   /_/\_\_|  \___||___/\___/ \__,_|_|  \___\___||___/
 !
 
-#define BACKGROUND #282828
-#define FOREGROUND #ebdbb2
+#define BACKGROUND #212733
+#define FOREGROUND #D9D7CE
 
 #define COLOR0  #282828
-#define COLOR8  #928374
+#define COLOR8  #5C6773
 
-#define COLOR1  #cc241d
-#define COLOR9  #fb4934
+#define COLOR1  #F07178
+#define COLOR9  #FB4934
 
-#define COLOR2  #98971a
-#define COLOR10 #b8bb26
+#define COLOR2  #BBE67E
+#define COLOR10 #86B300
 
-#define COLOR3  #d79921
-#define COLOR11 #fabd2f
+#define COLOR3  #FFC44C
+#define COLOR11 #E6B673
 
-#define COLOR4  #458588
-#define COLOR12 #83a598
+#define COLOR4  #5CCFE6
+#define COLOR12 #36A3D9
 
-#define COLOR5  #b16286
-#define COLOR13 #d3869b
+#define COLOR5  #D4BFFF
+#define COLOR13 #A37ACC
 
-#define COLOR6  #689d6a
-#define COLOR14 #8ec07c
+#define COLOR6  #95E6CB
+#define COLOR14 #4CBF99
 
-#define COLOR7  #a89984
-#define COLOR15 #ebdbb2
+#define COLOR7  #E6E1CF
+#define COLOR15 #F3F3F3
 
 *background: BACKGROUND
-*foreground: FOREGROUND
-
+*foreground: FOREGROUND 
 *color0:  COLOR0
 *color8:  COLOR8
 

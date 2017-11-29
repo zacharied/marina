@@ -26,7 +26,7 @@ font:
   size: 26.0
   offset:
       x: -53.5
-      y: 2.0
+      y: 4.0
       
   use_thin_strokes: true
 
@@ -42,25 +42,25 @@ custom_cursor_colors: false
 colors:
   primary:
     background: '#212733'
-    foreground: '#D0CEC3'
+    foreground: '#D9D7CE'
   normal:
     black:	    '#282828'
     red:	    '#F07178'
     green:	    '#BBE67E'
     yellow:	    '#FFC44C'
-    blue:	    '#80D4FF'
-    magenta:	'#B16286'
-    cyan:	    '#689D6A'
-    white:	    '#A89984'
-  bright:
-    black:	    '#928374'
-    red:	    '#FB4934'
-    green:	    '#B8BB26'
-    yellow:	    '#FFA759'
     blue:	    '#5CCFE6'
     magenta:	'#D4BFFF'
     cyan:	    '#95E6CB'
-    white:	    '#EBDBB2'
+    white:	    '#E6E1CF'
+  bright:
+    black:	    '#928374'
+    red:	    '#FB4934'
+    green:	    '#86B300'
+    yellow:	    '#E6B673'
+    blue:	    '#36A3D9'
+    magenta:	'#A37ACC'
+    cyan:	    '#4CBF99'
+    white:	    '#F3F3F3'
 
 visual_bell:
   animation: EaseOutExpo
