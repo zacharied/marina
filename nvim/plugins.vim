@@ -4,13 +4,17 @@ call plug#begin('~/.local/share/vim-plug')
 
 " Colorschemes.
 Plug 'nightsense/seabird'
-
 Plug 'nightsense/seagrey'
+Plug 'ayu-theme/ayu-vim'
 
 " {{{1 Language
 Plug 'rust-lang/rust.vim'
 
 Plug 'lervag/vimtex'
+
+Plug 'zacharied/lc3.vim'
+
+Plug 'Shougo/vinarise.vim'
 
 " {{{1 Completion
 " Core completion engine.
@@ -35,6 +39,9 @@ Plug 'zchee/deoplete-zsh'
 
 " Python.
 Plug 'zchee/deoplete-jedi'
+
+" Rust.
+Plug 'racer-rust/vim-racer'
 
 " {{{1 Navigation
 " File explorer.

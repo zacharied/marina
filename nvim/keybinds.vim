@@ -1,7 +1,4 @@
-" {{{1 Global 
-
-" Manatee's leader key is used to control navigation through UI windows.
-let mapleader = "\<Space>"
+" {{{1 Global
 
 " Unhighlight search.
 noremap <silent> <A-n> :nohl<CR>
@@ -19,7 +16,8 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " {{{1 User interface
-" Prevent tagbar from overriding space leader.
+
+" Prevent tagbar from overriding spacebar bindings.
 let g:tagbar_map_showproto = ""
 
 function! ManateeWinNERDTree(open)
@@ -57,6 +55,7 @@ augroup manatee_win_tagbar
 augroup END
 
 " {{{1 System
+
 nnoremap <silent> <Leader>p :PlugUpdate<CR>
 
 augroup manatee#win#plug

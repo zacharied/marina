@@ -131,7 +131,6 @@ def report(report):
     # Set initial padding of desktops
     section_desktops = text.offset(10)
     for i, d in enumerate(gen_desktops(report)):
-        inner = '
         inner = '{o}{i}{s}{n}{o}'.format(o=text.offset(10), i=text.style(text.Style.ITALIC, str(i + 1)), s=text.offset(7), n=d.name)
         if d.state == desktop.State.FOCUSED:
             inner = text.decorate(text.Decoration.UNDERLINE, inner)

@@ -1,21 +1,21 @@
 " {{{1 Opening
+
 " Reload configuration when saved.
-augroup manatee#reload_vimrc
+augroup vimrc_autoreload
     autocmd!
-    autocmd BufWritePost $MYVIMRC,$DOTS/nvim/manatee/* nested source $MYVIMRC
+    autocmd BufWritePost $MYVIMRC,$DOTS/nvim/*.vim nested source $MYVIMRC
 augroup END
 
-" Load each config section.
-let g:manatee_vim#directory = expand('$DOTS') . '/nvim/manatee'
-function! SourceManatee(file)
-    exe 'source ' . g:manatee_vim#directory . '/' . a:file 
-endfunction 
+function! VimrcSource(f)
+    exe 'source ' . '$DOTS/nvim/' . a:f
+endfunction
 
-call SourceManatee('plugins.vim')
-call SourceManatee('keybinds.vim')
-call SourceManatee('text.vim')
-call SourceManatee('command.vim')
-call SourceManatee('interface.vim')
+call VimrcSource('plugins.vim')
+call VimrcSource('keybinds.vim')
+call VimrcSource('text.vim')
+call VimrcSource('command.vim')
+call VimrcSource('interface.vim')
+call VimrcSource('language.vim')
 
 " {{{1 Closing
 

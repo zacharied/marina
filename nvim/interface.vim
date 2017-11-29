@@ -20,4 +20,6 @@ colorscheme greygull
 " Hide completion messages.
 set shortmess+=c
 
+" {{{1 Closing
+
 " vim: fdm=marker :

@@ -8,7 +8,7 @@
 # Applications {{{1
 # Launch terminal emulator
 super + Return
-	$TERM_EMULATOR
+	alacritty
 
 # Launch terminal emulator in the same directory as focused terminal
 super + shift + Return
@@ -19,7 +19,7 @@ super + semicolon
 
 # Application menu
 super + space
-	rofi -show DRun
+	rofi -show drun
 # }}}
 
 # Desktop {{{1

@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
 function launch() {
-    $1 | xbox \
-        --ypos "$2" \
-        --font 'sans 12' \
-        --autosize vh \
-        --padding 10 \
-        --border 2 \
-        --bg-color FF282828 \
-        --fg-color FFEBDBB2 \
-        --border-color FF000000 \
+    "$1" | box11                  \
+        --ypos "$2"               \
+        --font 'sans 12'          \
+        --autosize vh             \
+        --padding 10              \
+        --border 2                \
+        --bg-color FF282828       \
+        --fg-color FFEBDBB2       \
+        --border-color FF000000   \
         &
 }
 
-typeset y=10
-for file in $(find "$DOTS/bspwm/ui/generator" -type f); do
-    launch $file $y
-    y=$(($y+100))
+declare -i y=10
+for file in "$DOTS/bspwm/ui/generator/"*; do
+    launch "$file" "$y"
+    y=$(($y + 100))
 done
 
 trap "kill 0" EXIT
