@@ -79,6 +79,11 @@ Plug 'easymotion/vim-easymotion'
 " Allow the repeat command to do more.
 Plug 'tpope/vim-repeat'
 
+" Folder-local vim configuration.
+Plug 'zacharied/vim-localvimrc'
+let g:localvimrc_ask = 0
+let g:localvimrc_notify_loaded = 1
+
 " {{{1 Closing
 
 call plug#end()
