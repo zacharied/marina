@@ -38,29 +38,29 @@ render_timer: false
 
 custom_cursor_colors: false
 
-# Colorscheme (Seagull)
+# Colorscheme (ayu mirage)
 colors:
   primary:
-    background: '0xffffff'
-    foreground: '0x6d767d'
+    background: '#212733'
+    foreground: '#D0CEC3'
   normal:
-    black:	    '0x1D252B'
-    red:	    '0xFF4053'
-    green:	    '0x11AB00'
-    yellow:	    '0xBF8C00'
-    blue:	    '0x0099FF'
-    magenta:	'0xFF549B'
-    cyan:	    '0x00A5AB'
-    white:	    '0xE6EAED'
+    black:	    '#282828'
+    red:	    '#F07178'
+    green:	    '#BBE67E'
+    yellow:	    '#FFC44C'
+    blue:	    '#80D4FF'
+    magenta:	'#B16286'
+    cyan:	    '#689D6A'
+    white:	    '#A89984'
   bright:
-    black:	    '0x0B141A'
-    red:	    '0xFF6200'
-    green:	    '0x61707A'
-    yellow:	    '0x6D767D'
-    blue:	    '0x787E82'
-    magenta:	'0x9854FF'
-    cyan:	    '0x808487'
-    white:	    '0xFFFFFF'
+    black:	    '#928374'
+    red:	    '#FB4934'
+    green:	    '#B8BB26'
+    yellow:	    '#FFA759'
+    blue:	    '#5CCFE6'
+    magenta:	'#D4BFFF'
+    cyan:	    '#95E6CB'
+    white:	    '#EBDBB2'
 
 visual_bell:
   animation: EaseOutExpo

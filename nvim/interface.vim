@@ -14,7 +14,9 @@ set relativenumber
 " {{{1 Colorscheme
 
 set termguicolors
-colorscheme greygull
+
+let ayucolor = "mirage"
+colorscheme ayu
 
 " {{{1 Command line
 " Hide completion messages.
