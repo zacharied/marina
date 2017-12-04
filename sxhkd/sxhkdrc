@@ -5,7 +5,7 @@
 #   |___/_/\_\_| |_|_|\_\__,_|
 #
 
-# Applications {{{1
+# {{{1 Applications
 # Launch terminal emulator
 super + Return
 	alacritty
@@ -20,9 +20,8 @@ super + semicolon
 # Application menu
 super + space
 	rofi -show drun
-# }}}
 
-# Desktop {{{1
+# {{{1 Desktop 
 # Shorthand for focusing desktop / moving nodes to other desktops
 super + {_,shift +} {1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,0}.local'
@@ -50,14 +49,11 @@ super + Tab
 super + BackSpace
 	bspc desktop -f last
 
-#  }}}
-
-# Web {{{
+# {{{1 Web
 super + w; super + w
 	$WEB_BROWSER
-# }}}
 
-# Node {{{
+# {{{1 Node 
 # Change focus / move focused window / resize presel.
 super + {_,shift +} {h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
@@ -80,9 +76,8 @@ super + n; super + p; super + {h,j,k,l}
 
 super + {comma,period}
 	"$DOTS/bspwm/scripts/node/presel" {--increase,--decrease}
-# }}}
 
-# System {{{
+# {{{1 System 
 super + p; super + q
 	bspc quit
 
@@ -106,11 +101,9 @@ super + o; super + {j,k}
 
 super + o; super + {J,K}
 	/usr/local/bin/brightness/samus-keyboard-backlight --{decrease,increase}
-#  }}}
 
-# Status {{{
+# {{{ Status 
 super + s
 	pgrep -f "$DOTS/bspwm/ui/system-status" &>/dev/null && pkill -f "$DOTS/bspwm/ui/system-status" || "$DOTS/bspwm/ui/system-status"
-# }}}
 
 # vim: fdm=marker :

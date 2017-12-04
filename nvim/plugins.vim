@@ -50,6 +50,10 @@ Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFocus'] }
 " Source code explorer.
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarOpen' ] }
 
+" {{{1 Visual guides
+" See color previews in source code.
+Plug 'ap/vim-css-color'
+
 " {{{1 Source control
 " Show git hunks changes in gutter.
 Plug 'airblade/vim-gitgutter'
