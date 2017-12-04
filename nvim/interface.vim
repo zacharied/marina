@@ -6,6 +6,11 @@ set hidden
 
 set scrolloff=3
 
+" {{{1 Cursor
+
+" Highlighting matched parentheses is kind of annoying.
+let loaded_matchparen = 1
+
 " {{{1 Gutter
 
 set number
