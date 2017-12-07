@@ -20,7 +20,7 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 " Prevent tagbar from overriding spacebar bindings.
 let g:tagbar_map_showproto = ""
 
-function! ManateeWinNERDTree(open)
+function! VimrcWinNERDTree(open)
     if a:open == 1
         NERDTreeFocus
     else
@@ -28,7 +28,7 @@ function! ManateeWinNERDTree(open)
     endif
 endfunction
 
-function! ManateeWinTagbar(open)
+function! VimrcWinTagbar(open)
     if a:open == 1
         TagbarOpen j
     else
@@ -36,21 +36,21 @@ function! ManateeWinTagbar(open)
     endif
 endfunction
 
-nnoremap <silent> <Leader>n :call ManateeWinNERDTree(1)<CR>
-nnoremap <silent> <Leader>N :call ManateeWinNERDTree(0)<CR>
+nnoremap <silent> <Leader>n :call VimrcWinNERDTree(1)<CR>
+nnoremap <silent> <Leader>N :call VimrcWinNERDTree(0)<CR>
 
-augroup manatee#win#nerd_tree
+augroup vimrc_win_nerd_tree
     autocmd!
     autocmd FileType nerdtree noremap <buffer> <Leader>n <C-w>p
-    autocmd FileType tagbar noremap <buffer> <Leader>n <C-w>p:call ManateeWinNERDTree(1)<CR>
+    autocmd FileType tagbar noremap <buffer> <Leader>n <C-w>p:call VimrcWinNERDTree(1)<CR>
 augroup END
 
 nnoremap <silent> <Leader>t :TagbarOpen j<CR>
 nnoremap <silent> <Leader>T :TagbarClose<CR>
 
-augroup manatee_win_tagbar
+augroup vimrc_win_tagbar
     autocmd!
-    autocmd FileType nerdtree noremap <buffer> <Leader>t <C-w>p:call ManateeWinTagbar(1)<CR>
+    autocmd FileType nerdtree noremap <buffer> <Leader>t <C-w>p:call VimrcWinTagbar(1)<CR>
     autocmd FileType tagbar noremap <buffer> <Leader>t <C-w>p
 augroup END
 
@@ -58,10 +58,24 @@ augroup END
 
 nnoremap <silent> <Leader>p :PlugUpdate<CR>
 
-augroup manatee#win#plug
+augroup vimrc_win_plug
     autocmd!
     autocmd FileType vim-plug noremap <buffer> <Leader>P <C-w>q
 augroup END
+
+" {{{1 Buffers
+
+" Basic buffer navigation.
+nnoremap <silent> <A-j> :bprev<CR>
+nnoremap <silent> <A-k> :bnext<CR>
+nnoremap <silent> <A-S-j> :bfirst<CR>
+nnoremap <silent> <A-S-k> :blast<CR>
+nnoremap <silent> <A-q> :bdelete<CR>
+
+" Buffer list.
+nnoremap <silent> <leader>b :buffers<CR> 
+
+
 
 " {{{1 Closing
 

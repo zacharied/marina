@@ -1,3 +1,5 @@
+" {{{1 Opening
+
 call plug#begin('~/.local/share/vim-plug')
 
 " {{{1 User interface
@@ -7,13 +9,21 @@ Plug 'nightsense/seabird'
 Plug 'nightsense/seagrey'
 Plug 'ayu-theme/ayu-vim'
 
+" Status line.
+Plug 'itchyny/lightline.vim'
+
 " {{{1 Language
+
+" Rust
 Plug 'rust-lang/rust.vim'
 
+" LaTeX
 Plug 'lervag/vimtex'
 
+" LC-3 assembly
 Plug 'zacharied/lc3.vim'
 
+" Binary
 Plug 'Shougo/vinarise.vim'
 
 " {{{1 Completion
@@ -50,6 +60,8 @@ Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFocus'] }
 " Source code explorer.
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarOpen' ] }
 
+Plug 'mbbill/undotree', { 'on': [ 'UndotreeShow', 'UndotreeToggle', 'UndotreeFocus' ] }
+
 " {{{1 Visual guides
 " See color previews in source code.
 Plug 'ap/vim-css-color'
@@ -70,6 +82,9 @@ Plug 'tpope/vim-surround'
 
 " Comment motions.
 Plug 'scrooloose/nerdcommenter'
+
+" Unicode utilities.
+Plug 'chrisbra/unicode.vim'
 
 " Create tables.
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeEnable' }
